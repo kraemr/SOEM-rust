@@ -1,4 +1,4 @@
-use std::ffi::{CStr, CString};
+use std::{env, ffi::{CStr, CString}};
 
 mod bindings {
     include!("bindings.rs");
@@ -6,6 +6,8 @@ mod bindings {
 use bindings::*;
 
 fn main() {
+    let ifname = env::args().nth(1).expect("Usage: program <interface_name>");
+    let ifname_c = CString::new(ifname).expect("CString conversion failed");
     unsafe {
         // --------------------------------------------------------------------
         // 1. Find adapters
@@ -15,15 +17,6 @@ fn main() {
             eprintln!("No adapters found");
             return;
         }
-
-        // Pick the first adapter
-        let ifname_c = {
-            let first = *adapter_list;
-            let name = CStr::from_ptr((first).name.as_ptr());
-            println!("Using adapter: {}", name.to_string_lossy());
-            CString::new(name.to_bytes()).unwrap()
-        };
-
         // --------------------------------------------------------------------
         // 2. Prepare SOEM context
         // --------------------------------------------------------------------
