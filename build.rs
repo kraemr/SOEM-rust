@@ -1,18 +1,28 @@
-
 extern crate bindgen;
 extern crate cc;
 
 fn main() {
     cc::Build::new()
         .files([
-            "soem/src/ec_base.c","soem/src/ec_coe.c","soem/src/ec_config.c",  "soem/src/ec_dc.c",  "soem/src/ec_eoe.c",  "soem/src/ec_foe.c",  "soem/src/ec_main.c",  "soem/src/ec_print.c",  "soem/src/ec_soe.c"
+            "soem/src/ec_base.c",
+            "soem/src/ec_coe.c",
+            "soem/src/ec_config.c",  
+            "soem/src/ec_dc.c",  
+            "soem/src/ec_eoe.c", 
+            "soem/src/ec_foe.c",  
+            "soem/src/ec_main.c",  
+            "soem/src/ec_print.c",  
+            "soem/src/ec_soe.c",
+            "soem/osal/linux/osal.c",
+            "soem/oshw/linux/nicdrv.c",
+            "soem/oshw/linux/oshw.c"
         ])
         .include("soem/build/include/")
 	.include("soem/include")
 	.include("soem/osal/linux")
 	.include("soem/osal")
 	.include("soem/oshw/linux/")
-        .compile("soem");
+    .compile("soem");
 
 
     // Generate Rust bindings with include path fixes
@@ -32,3 +42,5 @@ fn main() {
 
 
 }
+
+
