@@ -1,7 +1,9 @@
 extern crate bindgen;
 extern crate cc;
 
-fn main() {
+
+
+fn compile_soem(){
     cc::Build::new()
         .files([
             "soem/src/ec_base.c",
@@ -18,11 +20,18 @@ fn main() {
             "soem/oshw/linux/oshw.c"
         ])
         .include("soem/build/include/")
-	.include("soem/include")
-	.include("soem/osal/linux")
-	.include("soem/osal")
-	.include("soem/oshw/linux/")
+    .include("soem/include")
+    .include("soem/osal/linux")
+    .include("soem/osal")
+    .include("soem/oshw/linux/")
     .compile("soem");
+
+}
+
+/*
+Test with bindgen 0.72.1
+*/
+fn regen_bindings() {
 
 
     // Generate Rust bindings with include path fixes
@@ -43,4 +52,19 @@ fn main() {
 
 }
 
+fn main() {
+    let lib_enabled = std::env::var("CARGO_FEATURE_LIB").is_ok();
+    let regen_enabled = std::env::var("CARGO_FEATURE_REGEN_BINDINGS").is_ok();
 
+    if regen_enabled {
+        println!("regenerating bindings");
+        compile_soem();
+        regen_bindings();
+        return;
+    }
+
+    if lib_enabled {
+        compile_soem();
+        return;
+    }
+}

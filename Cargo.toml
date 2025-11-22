@@ -1,8 +1,22 @@
 [package]
-name = "SOEM-rust"
+name = "soem-rust"
 version = "0.1.0"
 edition = "2024"
 
 [build-dependencies]
 bindgen = "0.72.1"
 cc = "1.2.46"
+
+[features]
+default = ["lib"]
+lib = []
+examples = []
+regen-bindings = [] 
+
+[lib]
+required-features = ["lib"]
+
+[[example]]
+name = "basic"
+path = "samples/basic.rs"
+required-features = ["examples"]
