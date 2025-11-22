@@ -1,3 +1,5 @@
+target/
+SOEM/build/
 # Prerequisites
 *.d
 
