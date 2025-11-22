@@ -1,5 +1,5 @@
 target/
-SOEM/build/
+vendor/soem/build/
 # Prerequisites
 *.d
 
