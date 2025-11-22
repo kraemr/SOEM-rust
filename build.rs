@@ -6,31 +6,31 @@ extern crate cc;
 fn compile_soem(){
     cc::Build::new()
         .files([
-            "SOEM/src/ec_base.c",
-            "SOEM/src/ec_coe.c",
-            "SOEM/src/ec_config.c",  
-            "SOEM/src/ec_dc.c",  
-            "SOEM/src/ec_eoe.c", 
-            "SOEM/src/ec_foe.c",  
-            "SOEM/src/ec_main.c",  
-            "SOEM/src/ec_print.c",  
-            "SOEM/src/ec_soe.c",
-            "SOEM/osal/linux/osal.c",
-            "SOEM/oshw/linux/nicdrv.c",
-            "SOEM/oshw/linux/oshw.c"
+            "soem/src/ec_base.c",
+            "soem/src/ec_coe.c",
+            "soem/src/ec_config.c",  
+            "soem/src/ec_dc.c",  
+            "soem/src/ec_eoe.c", 
+            "soem/src/ec_foe.c",  
+            "soem/src/ec_main.c",  
+            "soem/src/ec_print.c",  
+            "soem/src/ec_soe.c",
+            "soem/osal/linux/osal.c",
+            "soem/oshw/linux/nicdrv.c",
+            "soem/oshw/linux/oshw.c"
         ])
-    .include("SOEM/include")
-    .include("SOEM/osal/linux")
-    .include("SOEM/osal")
-    .include("SOEM/oshw/linux/")
-    .compile("SOEM");
+    .include("soem/include")
+    .include("soem/osal/linux")
+    .include("soem/osal")
+    .include("soem/oshw/linux/")
+    .compile("soem");
 }
 
 /* Tested with bindgen 0.72.1 on linux */
 fn regen_bindings() {
     // Generate Rust bindings with include path fixes
     let bindings = bindgen::Builder::default()
-        .header("SOEM/include/soem/soem.h")
+        .header("soem/include/soem/soem.h")
         .clang_arg("-Isoem/include")
         .clang_arg("-Isoem/osal")
         .clang_arg("-Isoem/osal/linux")
